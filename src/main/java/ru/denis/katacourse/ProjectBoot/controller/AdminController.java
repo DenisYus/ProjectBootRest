@@ -17,11 +17,11 @@ import java.util.List;
 
 @Controller
 public class AdminController {
-    private UserService dao;
+    private final UserService userService;
 
 
-    public AdminController(UserService dao) {
-        this.dao = dao;
+    public AdminController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping(value = "/")
@@ -37,7 +37,7 @@ public class AdminController {
 
     @GetMapping("/people")
     public String index(Model model) {
-        model.addAttribute("people", dao.getAllUsers());
+        model.addAttribute("people", userService.getAllUsers());
         return "view/index";
     }
 
@@ -47,33 +47,33 @@ public class AdminController {
     }
 
     @PostMapping("/people")
-    public String creat(@ModelAttribute("user") @Valid User user,
+    public String create(@ModelAttribute("user") @Valid User user,
                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "view/new";
         }
-        dao.saveUser(user);
+        userService.saveUser(user);
         return "redirect:/people";
     }
 
     @DeleteMapping("/people/{id}")
     public String deletePerson(@PathVariable("id") int id) {
-        dao.removeUserById(id);
+        userService.removeUserById(id);
         return "redirect:/people";
     }
 
     @GetMapping("/people/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", dao.getUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "view/edit";
     }
 
     @PatchMapping("/people/{id}")
-    public String updatePerson(@ModelAttribute("user") @Valid User updateuser, BindingResult bindingResult) {
+    public String updatePerson(@ModelAttribute("user") @Valid User updateUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "view/edit";
         }
-        dao.updateUser(updateuser);
+        userService.updateUser(updateUser);
         return "redirect:/people";
     }
 }

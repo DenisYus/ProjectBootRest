@@ -27,10 +27,14 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void removeUserById(int id) {
-        User user = entityManager.find(User.class, id);
-        if (user != null) {
+        try{
+            User user = entityManager.find(User.class, id);
             entityManager.remove(user);
         }
+        catch (NullPointerException e){
+            System.out.println("user = null");
+        }
+
     }
 
     @Override
