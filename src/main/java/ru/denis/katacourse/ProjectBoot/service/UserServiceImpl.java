@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
         if (userDAO.findByUserEmail(email) == null)
             throw new UsernameNotFoundException("User not found");
        
-        return (UserDetails) userDAO.findByUserEmail(email);
+        return userDAO.findByUserEmail(email);
 
     }
 }

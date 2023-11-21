@@ -16,11 +16,11 @@ import ru.denis.katacourse.ProjectBoot.util.UserValidator;
 public class AuthController {
     private final RegistrationUser registrationUser;
 
-    private final UserValidator userValidator;
 
-    public AuthController(RegistrationUser registrationUser, UserValidator userValidator) {
+
+    public AuthController(RegistrationUser registrationUser) {
         this.registrationUser = registrationUser;
-        this.userValidator = userValidator;
+
     }
 
     @GetMapping("/login")
@@ -33,7 +33,7 @@ public class AuthController {
     }
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
-        //userValidator.validate(user, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "/auth/registration"; }
         registrationUser.register(user);
