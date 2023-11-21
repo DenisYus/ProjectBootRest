@@ -6,10 +6,11 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import ru.denis.katacourse.ProjectBoot.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl implements UserDAO  {
 
     @PersistenceContext()
     private EntityManager entityManager;
@@ -44,5 +45,13 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserById(int id) {
         return entityManager.find(User.class, id);
+    }
+
+    @Override
+    public User findByUserEmail(String email) {
+
+        return entityManager.createQuery("select u from User u where u.email = :email", User.class)
+                .setParameter("email", email)
+                .getSingleResult();
     }
 }

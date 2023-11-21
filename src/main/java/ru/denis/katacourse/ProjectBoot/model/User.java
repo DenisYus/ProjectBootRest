@@ -24,17 +24,28 @@ public class User {
     @NotEmpty(message = "Email should not be empty")
     @Email(message = "Email should be valid")
     private String email;
+    @NotEmpty(message = "Password should not be empty")
+    private String password;
 
     public User() {
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public User(String name, int age, String email) {
         this.name = name;
         this.age = age;
         this.email = email;
+        this.password = password;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

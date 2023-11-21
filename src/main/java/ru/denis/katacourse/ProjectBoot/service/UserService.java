@@ -1,11 +1,13 @@
 package ru.denis.katacourse.ProjectBoot.service;
 
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.denis.katacourse.ProjectBoot.model.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     void saveUser(User user);
 
     void updateUser(User updateUser);
@@ -16,4 +18,5 @@ public interface UserService {
 
     User getUserById(int id);
 
+    UserDetails loadUserByUsername(String email);
 }
