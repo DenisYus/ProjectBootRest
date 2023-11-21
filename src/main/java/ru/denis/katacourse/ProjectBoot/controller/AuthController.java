@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.denis.katacourse.ProjectBoot.model.User;
 import ru.denis.katacourse.ProjectBoot.service.RegistrationUser;
-import ru.denis.katacourse.ProjectBoot.util.UserValidator;
+
 
 @Controller
 @RequestMapping("/auth")
