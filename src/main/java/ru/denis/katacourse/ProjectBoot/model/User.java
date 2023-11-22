@@ -6,15 +6,16 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,15 +33,37 @@ public class User implements UserDetails {
     private String email;
     @NotEmpty(message = "Password should not be empty")
     private String password;
-    @NotEmpty(message = "Role should not be empty")
-    private String role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "userid"),
+            inverseJoinColumns = @JoinColumn(name = "roleid"))
+    private Set<Role> roles = new HashSet<>();
 
-    public String getRole() {
-        return role;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(age, user.age) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(roles, user.roles);
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age, email, password, roles);
+    }
+
+    public Set<Role> getRole() {
+        return roles;
+    }
+
+    public void setRole(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public User() {
@@ -48,7 +71,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(getRole()));
+        return getRole();
     }
 
     public String getPassword() {
@@ -84,12 +107,12 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public User(String name, int age, String email) {
+    public User(String name, int age, String email, Set<Role> roles) {
         this.name = name;
         this.age = age;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.roles = roles;
     }
 
     public Integer getId() {

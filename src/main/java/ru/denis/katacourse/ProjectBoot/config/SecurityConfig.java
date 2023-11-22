@@ -26,23 +26,27 @@ import ru.denis.katacourse.ProjectBoot.service.UserService;
 public class SecurityConfig   {
 
     private final UserService userService;
-    public SecurityConfig(UserService userService) {
+    public SecurityConfig(UserService userService, LoginSuccessHandler loginSuccessHandler) {
         this.userService = userService;
+        this.loginSuccessHandler = loginSuccessHandler;
     }
+    private final LoginSuccessHandler loginSuccessHandler;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/people").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/auth/login","/auth/registration", "/error").permitAll()
                         .anyRequest().hasAnyRole("USER", "ADMIN")
+
                 )
 
                 .formLogin((form) -> form
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/process_login")
-                        .defaultSuccessUrl("/", true)
+                        .successHandler(loginSuccessHandler)
                         .failureUrl("/auth/login?error")
                         .permitAll())
                 .logout((logout) -> logout

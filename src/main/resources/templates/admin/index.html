@@ -23,16 +23,16 @@
         <td th:utext="${user.getRole()}"></td>
 
         <td>
-            <form th:method="DELETE" th:action="@{/people/{id}(id=${user.getId()})}">
+            <form th:method="DELETE" th:action="@{/admin/people/{id}(id=${user.getId()})}">
                 <input type="submit" value="Delete">
             </form>
         </td>
         <td>
-            <a th:href="@{/people/{id}/edit(id=${user.getId()})}">Edit</a>
+            <a th:href="@{/admin/people/{id}/edit(id=${user.getId()})}">Edit</a>
         </td>
     </tr>
 </table>
 <br/>
-<button onclick="window.location.href = '/people/new';">Add new user</button>
+<button onclick="window.location.href = '/admin/people/new';">Add new user</button>
 </body>
 </html>
