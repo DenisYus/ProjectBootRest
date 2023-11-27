@@ -15,5 +15,5 @@ public interface RoleService {
 
     List<Role> allRoles();
 
-    Role getDefaultRole();
+
 }

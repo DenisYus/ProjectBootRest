@@ -12,6 +12,6 @@ public interface RoleDAO {
 
     List<Role> allRoles();
 
-    Role getDefaultRole();
+
 }
 

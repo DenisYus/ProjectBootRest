@@ -35,11 +35,13 @@ public class AdminController {
     @GetMapping("/people")
     public String index(Model model) {
         model.addAttribute("people", userService.getAllUsers());
+        model.addAttribute("roles", roleService.allRoles());
         return "admin/index";
     }
 
     @GetMapping("/people/new")
     public String newUser(@ModelAttribute("user") User user){
+
         return "admin/new";
     }
 

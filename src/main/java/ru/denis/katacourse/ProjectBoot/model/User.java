@@ -156,4 +156,5 @@ public class User implements UserDetails {
                 ", email='" + email + '\'' +
                 '}';
     }
+
 }

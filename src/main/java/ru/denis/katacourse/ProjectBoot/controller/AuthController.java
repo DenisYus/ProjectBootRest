@@ -3,12 +3,11 @@ package ru.denis.katacourse.ProjectBoot.controller;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.denis.katacourse.ProjectBoot.model.User;
 import ru.denis.katacourse.ProjectBoot.service.RegistrationUser;
+import ru.denis.katacourse.ProjectBoot.service.RoleService;
+import ru.denis.katacourse.ProjectBoot.service.UserService;
 
 
 @Controller
@@ -18,7 +17,8 @@ public class AuthController {
 
 
 
-    public AuthController(RegistrationUser registrationUser) {
+
+    public AuthController(RegistrationUser registrationUser, UserService userService, RoleService roleService) {
         this.registrationUser = registrationUser;
 
     }
@@ -36,6 +36,7 @@ public class AuthController {
 
         if (bindingResult.hasErrors()) {
             return "/auth/registration"; }
+
         registrationUser.register(user);
         return "redirect:/auth/login";
     }
