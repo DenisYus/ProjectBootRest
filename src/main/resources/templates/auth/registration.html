@@ -22,7 +22,18 @@
     <input type="password" th:field="*{password}" id="password"/>
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     <br/>
-
+    <label>
+        <input type="checkbox"
+               name="roleUSER"
+               th:value="ROLE_USER"
+               th:text="USER">
+    </label>
+    <label>
+        <input type="checkbox"
+               name="roleADMIN"
+               th:value="ROLE_ADMIN"
+               th:text="ADMIN">
+    </label>
     <br/>
     <input type="submit" value="Sign Up!"/>
 

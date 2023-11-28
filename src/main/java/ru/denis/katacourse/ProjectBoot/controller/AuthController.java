@@ -4,10 +4,16 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.denis.katacourse.ProjectBoot.model.Role;
 import ru.denis.katacourse.ProjectBoot.model.User;
 import ru.denis.katacourse.ProjectBoot.service.RegistrationUser;
 import ru.denis.katacourse.ProjectBoot.service.RoleService;
 import ru.denis.katacourse.ProjectBoot.service.UserService;
+
+import java.util.HashSet;
+import java.util.Set;
+
+
 
 
 @Controller
@@ -18,7 +24,8 @@ public class AuthController {
 
 
 
-    public AuthController(RegistrationUser registrationUser, UserService userService, RoleService roleService) {
+
+    public AuthController(RegistrationUser registrationUser, UserService userService, RoleService roleService, RoleService roleService1) {
         this.registrationUser = registrationUser;
 
     }

@@ -41,13 +41,13 @@ public class AdminController {
 
     @GetMapping("/people/new")
     public String newUser(@ModelAttribute("user") User user){
-
         return "admin/new";
     }
 
     @PostMapping("/people")
     public String create(@ModelAttribute("user") @Valid User user,
                         BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) {
             return "admin/new";
         }

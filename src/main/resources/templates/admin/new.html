@@ -22,12 +22,24 @@
     <input type="text" th:field="*{password}" id="password"/>
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     <br/>
-
-    <label for="role">Role</label>
-    <input type="text" th:field="*{role}" id="role"/>
-    <div style="color:red" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</div>
     <br/>
-    <input type="submit" value="Create!"/>
+    <div class="form-group m-3" readonly="readonly">
+        <label for="roles">Role</label>
+        <select class="form-select w-100" multiple
+                aria-label="multiple select example"
+                size="2"
+                id="roles"
+                name="checkedRoles">
+            <option selected="true">
+                USER
+            </option>
+            <option>
+                ADMIN
+            </option>
+        </select>
+    </div>
+    <br/>
+        <button type="submit" class="btn btn-success">Add new user</button>
 </form>
 </body>
 </html>

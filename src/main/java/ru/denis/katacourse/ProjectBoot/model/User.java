@@ -36,8 +36,8 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "roleid"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     @Override
@@ -64,6 +64,9 @@ public class User implements UserDetails {
 
     public void setRole(Set<Role> roles) {
         this.roles = roles;
+    }
+    public void addRole(Role role){
+        this.roles.add(role);
     }
 
     public User() {
