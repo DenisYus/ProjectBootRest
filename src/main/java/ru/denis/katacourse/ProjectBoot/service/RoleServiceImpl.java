@@ -8,7 +8,7 @@ import ru.denis.katacourse.ProjectBoot.model.Role;
 import java.util.List;
 
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
     private final RoleDAO roleDAO;
 
     public RoleServiceImpl(RoleDAO roleDAO) {

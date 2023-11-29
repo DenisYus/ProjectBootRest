@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UserDAOImpl implements UserDAO  {
+public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext()
     private EntityManager entityManager;
@@ -28,11 +28,10 @@ public class UserDAOImpl implements UserDAO  {
 
     @Override
     public void removeUserById(int id) {
-        try{
+        try {
             User user = entityManager.find(User.class, id);
             entityManager.remove(user);
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("user = null");
         }
 
@@ -42,6 +41,7 @@ public class UserDAOImpl implements UserDAO  {
     public List<User> getAllUsers() {
         return entityManager.createQuery("from User", User.class).getResultList();
     }
+
     @Override
     public User getUserById(int id) {
         return entityManager.find(User.class, id);

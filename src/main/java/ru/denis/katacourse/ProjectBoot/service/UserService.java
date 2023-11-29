@@ -19,4 +19,6 @@ public interface UserService extends UserDetailsService {
     User getUserById(int id);
 
     UserDetails loadUserByUsername(String email);
+
+
 }

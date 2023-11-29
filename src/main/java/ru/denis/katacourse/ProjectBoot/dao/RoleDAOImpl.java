@@ -6,10 +6,12 @@ import org.springframework.stereotype.Repository;
 import ru.denis.katacourse.ProjectBoot.model.Role;
 
 import java.util.List;
+
 @Repository
-public class RoleDAOImpl implements RoleDAO{
+public class RoleDAOImpl implements RoleDAO {
     @PersistenceContext()
     private EntityManager entityManager;
+
     @Override
     public Role getRole(String userRole) {
         Role role = null;

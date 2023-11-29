@@ -43,14 +43,14 @@ public class AdminController {
     }
 
     @GetMapping("/people/new")
-    public String newUser(@ModelAttribute("user") User user){
+    public String newUser(@ModelAttribute("user") User user) {
         return "admin/new";
     }
 
     @PostMapping("/people")
     public String create(@ModelAttribute("user") @Valid User user,
                          @RequestParam(value = "checkedRoles") String[] selectResult,
-                        BindingResult bindingResult) {
+                         BindingResult bindingResult) {
         for (String s : selectResult) {
             user.addRole(roleService.getRole("ROLE_" + s));
         }

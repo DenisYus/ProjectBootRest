@@ -10,7 +10,7 @@ import ru.denis.katacourse.ProjectBoot.service.UserService;
 
 import java.util.HashSet;
 import java.util.Set;
-@Component
+
 public class DB {
     private final UserService userService;
     private final RoleService roleService;
@@ -34,11 +34,12 @@ public class DB {
         roleService.addRole(roleUser);
         adminSet.add(roleAdmin);
         userSet.add(roleUser);
-        User newUser = new User("Ivan", 25, "vanya@mail.com","123", userSet);
-        User admin = new User("Petya", 30, "petya@mail.com","123", adminSet);
+        User newUser = new User("Ivan", 25, "vanya@mail.com", "123", userSet);
+        User admin = new User("Petya", 30, "petya@mail.com", "123", adminSet);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         userService.saveUser(newUser);
         userService.saveUser(admin);
     }
+
 }

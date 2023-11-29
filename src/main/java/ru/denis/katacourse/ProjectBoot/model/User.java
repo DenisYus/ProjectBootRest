@@ -40,23 +40,14 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(age, user.age) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(roles, user.roles);
+    public User(String name, int age, String email, String password, Set<Role> roles) {
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, age, email, password, roles);
-    }
 
     public Set<Role> getRole() {
         return roles;
@@ -65,7 +56,8 @@ public class User implements UserDetails {
     public void setRole(Set<Role> roles) {
         this.roles = roles;
     }
-    public void addRole(Role role){
+
+    public void addRole(Role role) {
         this.roles.add(role);
     }
 
@@ -110,13 +102,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public User(String name, int age, String email,String password, Set<Role> roles) {
-        this.name = name;
-        this.age = age;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-    }
 
     public Integer getId() {
         return id;
@@ -151,6 +136,24 @@ public class User implements UserDetails {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(age, user.age) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age, email, password, roles);
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
@@ -159,6 +162,7 @@ public class User implements UserDetails {
                 ", email='" + email + '\'' +
                 '}';
     }
+
     public String getRolesAsString() {
         boolean first = true;
         String s = "";

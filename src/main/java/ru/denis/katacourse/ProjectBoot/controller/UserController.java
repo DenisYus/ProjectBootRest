@@ -16,6 +16,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping()
     public String printWelcome(@AuthenticationPrincipal User user, ModelMap model) {
         model.addAttribute("user", user);

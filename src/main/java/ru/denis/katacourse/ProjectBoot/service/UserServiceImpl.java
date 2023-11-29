@@ -2,6 +2,7 @@ package ru.denis.katacourse.ProjectBoot.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;
+
+
     }
 
     @Override
@@ -47,13 +50,16 @@ public class UserServiceImpl implements UserService {
     public User getUserById(int id) {
         return userDAO.getUserById(id);
     }
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         if (userDAO.findByUserEmail(email) == null)
             throw new UsernameNotFoundException("User not found");
-       
+
         return userDAO.findByUserEmail(email);
 
     }
+
+
 }

@@ -19,26 +19,26 @@ import org.springframework.security.web.SecurityFilterChain;
 import ru.denis.katacourse.ProjectBoot.service.UserService;
 
 
-
-
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig   {
+public class SecurityConfig {
 
     private final UserService userService;
+
     public SecurityConfig(UserService userService, LoginSuccessHandler loginSuccessHandler) {
         this.userService = userService;
         this.loginSuccessHandler = loginSuccessHandler;
     }
+
     private final LoginSuccessHandler loginSuccessHandler;
 
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/auth/login","/auth/registration", "/error").permitAll()
+                        .requestMatchers("/auth/login", "/auth/registration", "/error").permitAll()
                         .anyRequest().hasAnyRole("USER", "ADMIN")
 
                 )
@@ -55,10 +55,11 @@ public class SecurityConfig   {
                         .permitAll());
 
 
-    return http.build();
+        return http.build();
     }
+
     @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(getPasswordEncoder());
         daoAuthenticationProvider.setUserDetailsService(userService);
@@ -69,10 +70,11 @@ public class SecurityConfig   {
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
 
-    }
+}
