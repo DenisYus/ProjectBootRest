@@ -40,7 +40,7 @@ public class AuthController {
                                       @RequestParam(value = "checkedRegistration") String[] selectResult,
                                       BindingResult bindingResult){
         for (String s : selectResult) {
-            user.addRole(roleService.getRole(s));
+            user.addRole(roleService.getRole("ROLE_" + s));
         }
         if (bindingResult.hasErrors()) {
             return "/auth/registration"; }

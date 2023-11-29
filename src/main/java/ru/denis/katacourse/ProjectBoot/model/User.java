@@ -159,6 +159,17 @@ public class User implements UserDetails {
                 ", email='" + email + '\'' +
                 '}';
     }
-
+    public String getRolesAsString() {
+        boolean first = true;
+        String s = "";
+        for (Role role : getRole()) {
+            if (!first) {
+                s += ", ";
+            }
+            s += role.toString();
+            first = false;
+        }
+        return s;
+    }
 
 }

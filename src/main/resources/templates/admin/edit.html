@@ -22,9 +22,24 @@
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <br/>
     <label for="password">Password</label>
-    <input type="text" th:field="*{password}" id="password">
+    <input type="password" th:field="*{password}" id="password">
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     <br/>
+    <div class="form-group m-3" readonly="readonly">
+        <label for="rolesEdit">Role</label>
+        <select class="form-select w-100" multiple
+                aria-label="multiple select example"
+                size="2"
+                id="rolesEdit"
+                name="userRolesSelector">
+            <option selected="selected">
+                USER
+            </option>
+            <option>
+                ADMIN
+            </option>
+        </select>
+    </div>
     <br/>
     <input type="submit" value="Update person">
 </form>

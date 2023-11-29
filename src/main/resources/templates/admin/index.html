@@ -20,7 +20,7 @@
         <td th:utext="${user.getName()}"></td>
         <td th:utext="${user.getAge()}"></td>
         <td th:utext="${user.getEmail()}"></td>
-        <td th:utext="${user.getRole()}"></td>
+        <td th:utext="${user.getRolesAsString()}"></td>
 
         <td>
             <form th:method="DELETE" th:action="@{/admin/people/{id}(id=${user.getId()})}">

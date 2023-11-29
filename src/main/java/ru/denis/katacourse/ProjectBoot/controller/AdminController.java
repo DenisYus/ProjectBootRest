@@ -52,7 +52,7 @@ public class AdminController {
                          @RequestParam(value = "checkedRoles") String[] selectResult,
                         BindingResult bindingResult) {
         for (String s : selectResult) {
-            user.addRole(roleService.getRole(s));
+            user.addRole(roleService.getRole("ROLE_" + s));
         }
         if (bindingResult.hasErrors()) {
             return "admin/new";
@@ -76,11 +76,15 @@ public class AdminController {
 
     @PatchMapping("/people/{id}")
     public String updatePerson(@ModelAttribute("user") @Valid User updateUser,
-                               @RequestParam(value = "checkedRoles") String[] selectResult,
+                               @RequestParam(value = "userRolesSelector") String[] selectResult,
                                BindingResult bindingResult) {
+        for (String s : selectResult) {
+            updateUser.addRole(roleService.getRole("ROLE_" + s));
+        }
         if (bindingResult.hasErrors()) {
             return "admin/edit";
         }
+        updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         userService.updateUser(updateUser);
         return "redirect:/admin/people";
     }
