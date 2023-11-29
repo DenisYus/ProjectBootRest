@@ -4,30 +4,27 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.denis.katacourse.ProjectBoot.model.Role;
 import ru.denis.katacourse.ProjectBoot.model.User;
 import ru.denis.katacourse.ProjectBoot.service.RegistrationUser;
 import ru.denis.katacourse.ProjectBoot.service.RoleService;
-import ru.denis.katacourse.ProjectBoot.service.UserService;
 
-import java.util.HashSet;
-import java.util.Set;
-
-
+import java.util.stream.Collectors;
 
 
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
     private final RegistrationUser registrationUser;
+    private final RoleService roleService;
 
 
 
 
 
-    public AuthController(RegistrationUser registrationUser, UserService userService, RoleService roleService, RoleService roleService1) {
+    public AuthController(RegistrationUser registrationUser, RoleService roleService) {
         this.registrationUser = registrationUser;
 
+        this.roleService = roleService;
     }
 
     @GetMapping("/login")
@@ -39,12 +36,17 @@ public class AuthController {
         return "auth/registration";
     }
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
-
+    public String performRegistration(@ModelAttribute("user") @Valid User user,
+                                      @RequestParam(value = "checkedRegistration") String[] selectResult,
+                                      BindingResult bindingResult){
+        for (String s : selectResult) {
+            user.addRole(roleService.getRole(s));
+        }
         if (bindingResult.hasErrors()) {
             return "/auth/registration"; }
 
         registrationUser.register(user);
         return "redirect:/auth/login";
     }
+
 }

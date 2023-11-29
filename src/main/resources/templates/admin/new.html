@@ -19,7 +19,7 @@
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <br/>
     <label for="password">Password</label>
-    <input type="text" th:field="*{password}" id="password"/>
+    <input type="password" th:field="*{password}" id="password"/>
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     <br/>
     <br/>
@@ -30,11 +30,11 @@
                 size="2"
                 id="roles"
                 name="checkedRoles">
-            <option selected="true">
-                USER
+            <option selected="selected">
+                ROLE_USER
             </option>
             <option>
-                ADMIN
+                ROLE_ADMIN
             </option>
         </select>
     </div>

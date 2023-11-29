@@ -15,5 +15,5 @@ public interface RoleService {
 
     List<Role> allRoles();
 
-
+    public void addRole(Role role);
 }

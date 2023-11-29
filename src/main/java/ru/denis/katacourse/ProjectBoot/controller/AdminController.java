@@ -4,6 +4,7 @@ package ru.denis.katacourse.ProjectBoot.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,11 +19,13 @@ import ru.denis.katacourse.ProjectBoot.service.UserService;
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping()
@@ -46,11 +49,15 @@ public class AdminController {
 
     @PostMapping("/people")
     public String create(@ModelAttribute("user") @Valid User user,
+                         @RequestParam(value = "checkedRoles") String[] selectResult,
                         BindingResult bindingResult) {
-
+        for (String s : selectResult) {
+            user.addRole(roleService.getRole(s));
+        }
         if (bindingResult.hasErrors()) {
             return "admin/new";
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
         return "redirect:/admin/people";
     }
@@ -68,11 +75,14 @@ public class AdminController {
     }
 
     @PatchMapping("/people/{id}")
-    public String updatePerson(@ModelAttribute("user") @Valid User updateUser, BindingResult bindingResult) {
+    public String updatePerson(@ModelAttribute("user") @Valid User updateUser,
+                               @RequestParam(value = "checkedRoles") String[] selectResult,
+                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "admin/edit";
         }
         userService.updateUser(updateUser);
         return "redirect:/admin/people";
     }
+
 }

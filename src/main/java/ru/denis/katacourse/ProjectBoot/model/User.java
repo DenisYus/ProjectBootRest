@@ -74,7 +74,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRole();
+        return roles;
     }
 
     public String getPassword() {
@@ -110,7 +110,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public User(String name, int age, String email, Set<Role> roles) {
+    public User(String name, int age, String email,String password, Set<Role> roles) {
         this.name = name;
         this.age = age;
         this.email = email;
@@ -159,5 +159,6 @@ public class User implements UserDetails {
                 ", email='" + email + '\'' +
                 '}';
     }
+
 
 }

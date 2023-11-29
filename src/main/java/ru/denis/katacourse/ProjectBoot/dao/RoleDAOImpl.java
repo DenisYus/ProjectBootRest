@@ -34,5 +34,10 @@ public class RoleDAOImpl implements RoleDAO{
         return entityManager.createQuery("from Role ", Role.class).getResultList();
     }
 
-
+    @Override
+    public void addRole(Role role) {
+        entityManager.persist(role);
     }
+
+
+}
