@@ -22,7 +22,7 @@
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <br/>
     <label for="password">Password</label>
-    <input type="password" th:value="${user.password}" id="password" name="password" >
+    <input type="password" th:value="${user.getPassword()}" id="password" name="password" >
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     <br/>
     <div class="form-group m-3" readonly="readonly">

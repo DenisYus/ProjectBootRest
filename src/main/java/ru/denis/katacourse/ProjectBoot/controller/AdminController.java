@@ -22,6 +22,7 @@ public class AdminController {
 
 
 
+
     public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
@@ -70,6 +71,7 @@ public class AdminController {
 
     @GetMapping("/people/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
+
         model.addAttribute("user", userService.getUserById(id));
         return "admin/edit";
     }
@@ -77,6 +79,7 @@ public class AdminController {
     @PatchMapping("/people/{id}")
     public String updatePerson(@ModelAttribute("user") @Valid User updateUser,
                                @RequestParam(value = "userRolesSelector") String[] selectResult,
+                               @PathVariable("id") int id,
                                BindingResult bindingResult) {
         for (String s : selectResult) {
             updateUser.addRole(roleService.getRole("ROLE_" + s));
@@ -84,9 +87,16 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admin/edit";
         }
-        userService.passEncod(updateUser);
+        User user = userService.getUserById(id);
+        String p = user.getPassword();
+
+        if (!p.equals(updateUser.getPassword())) {
+            userService.passEncod(updateUser);
+        }
         userService.updateUser(updateUser);
         return "redirect:/admin/people";
+
+
     }
 
 }
