@@ -16,15 +16,12 @@ public class AuthController {
 
     private final RoleService roleService;
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
 
-    public AuthController(RoleService roleService, UserService userService, PasswordEncoder passwordEncoder) {
 
-
+    public AuthController(RoleService roleService, UserService userService) {
         this.roleService = roleService;
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/login")
@@ -48,7 +45,7 @@ public class AuthController {
             return "/auth/registration";
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userService.passEncod(user);
         userService.saveUser(user);
         return "redirect:/auth/login";
     }

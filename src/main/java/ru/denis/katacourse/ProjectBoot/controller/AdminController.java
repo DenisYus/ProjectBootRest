@@ -19,13 +19,13 @@ import ru.denis.katacourse.ProjectBoot.service.UserService;
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder;
 
 
-    public AdminController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
+
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
+
     }
 
     @GetMapping()
@@ -57,7 +57,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admin/new";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userService.passEncod(user);
         userService.saveUser(user);
         return "redirect:/admin/people";
     }
@@ -84,7 +84,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admin/edit";
         }
-        updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+        userService.passEncod(updateUser);
         userService.updateUser(updateUser);
         return "redirect:/admin/people";
     }

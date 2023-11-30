@@ -20,5 +20,5 @@ public interface UserService extends UserDetailsService {
 
     UserDetails loadUserByUsername(String email);
 
-
+    void passEncod(User user);
 }

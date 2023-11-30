@@ -33,12 +33,14 @@ public class User implements UserDetails {
     private String email;
     @NotEmpty(message = "Password should not be empty")
     private String password;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @Fetch(FetchMode.JOIN)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+    public User() {
+    }
 
     public User(String name, int age, String email, String password, Set<Role> roles) {
         this.name = name;
@@ -61,8 +63,7 @@ public class User implements UserDetails {
         this.roles.add(role);
     }
 
-    public User() {
-    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

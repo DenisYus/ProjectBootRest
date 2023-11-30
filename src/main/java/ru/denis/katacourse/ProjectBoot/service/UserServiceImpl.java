@@ -1,5 +1,8 @@
 package ru.denis.katacourse.ProjectBoot.service;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,11 +19,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserDAO userDAO;
 
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDAO userDAO) {
+    @Autowired
+    @Lazy
+    public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
-
-
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -59,6 +64,11 @@ public class UserServiceImpl implements UserService {
 
         return userDAO.findByUserEmail(email);
 
+    }
+
+    @Override
+    public void passEncod(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
 
