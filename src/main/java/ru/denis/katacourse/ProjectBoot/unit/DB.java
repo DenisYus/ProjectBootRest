@@ -10,7 +10,7 @@ import ru.denis.katacourse.ProjectBoot.service.UserService;
 
 import java.util.HashSet;
 import java.util.Set;
-
+@Component
 public class DB {
     private final UserService userService;
     private final RoleService roleService;
