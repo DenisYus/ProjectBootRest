@@ -88,9 +88,7 @@ public class AdminController {
             return "admin/edit";
         }
         User user = userService.getUserById(id);
-        String p = user.getPassword();
-
-        if (!p.equals(updateUser.getPassword())) {
+        if (!(user.getPassword()).equals(updateUser.getPassword())) {
             userService.passEncod(updateUser);
         }
         userService.updateUser(updateUser);
