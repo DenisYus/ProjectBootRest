@@ -80,7 +80,10 @@ public class AdminController {
     public String updatePerson(@ModelAttribute("user") @Valid User updateUser,
                                @RequestParam(value = "userRolesSelector") String[] selectResult,
                                @PathVariable("id") int id,
-                               BindingResult bindingResult) {
+                               BindingResult bindingResult, Model model) {
+        model.addAttribute("roles", roleService.allRoles());
+
+
         for (String s : selectResult) {
             updateUser.addRole(roleService.getRole("ROLE_" + s));
         }
@@ -88,6 +91,7 @@ public class AdminController {
             return "admin/edit";
         }
         User user = userService.getUserById(id);
+
         if (!(user.getPassword()).equals(updateUser.getPassword())) {
             userService.passEncod(updateUser);
         }

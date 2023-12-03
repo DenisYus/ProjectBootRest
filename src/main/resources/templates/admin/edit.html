@@ -25,22 +25,20 @@
     <input type="password" th:value="${user.getPassword()}" id="password" name="password" >
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     <br/>
-    <div class="form-group m-3" readonly="readonly">
-        <label for="rolesEdit">Role</label>
+
+        <label for="role">Role</label>
         <select class="form-select w-100" multiple
                 aria-label="multiple select example"
                 size="2"
-                id="rolesEdit"
-                name="userRolesSelector">
-            <option selected="selected">
-                USER
-            </option>
-            <option>
-                ADMIN
+                id="role"
+                name="role">
+            <option th:each="role : ${roles}" th:selected="${role == user.getRole()}" th:value="${role}">
+            <th:block th:text="${role}"> </th:block>
             </option>
         </select>
-    </div>
+
     <br/>
+
     <input type="submit" value="Update person">
 </form>
 </body>
