@@ -71,7 +71,7 @@ public class AdminController {
 
     @GetMapping("/people/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
-
+        model.addAttribute("roles", roleService.allRoles());
         model.addAttribute("user", userService.getUserById(id));
         return "admin/edit";
     }
@@ -80,8 +80,8 @@ public class AdminController {
     public String updatePerson(@ModelAttribute("user") @Valid User updateUser,
                                @RequestParam(value = "userRolesSelector") String[] selectResult,
                                @PathVariable("id") int id,
-                               BindingResult bindingResult, Model model) {
-        model.addAttribute("roles", roleService.allRoles());
+                               BindingResult bindingResult) {
+
 
 
         for (String s : selectResult) {

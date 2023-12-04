@@ -31,8 +31,8 @@
                 aria-label="multiple select example"
                 size="2"
                 id="role"
-                name="role">
-            <option th:each="role : ${roles}" th:selected="${role == user.getRole()}" th:value="${role}">
+                name="userRolesSelector">
+            <option th:each="role : ${roles}" th:selected="${user.role.contains(role)}" th:value="${role}">
             <th:block th:text="${role}"> </th:block>
             </option>
         </select>
