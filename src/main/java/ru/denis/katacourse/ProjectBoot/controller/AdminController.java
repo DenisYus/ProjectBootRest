@@ -37,7 +37,8 @@ public class AdminController {
 
 
     @GetMapping("/people")
-    public String index(Model model) {
+    public String index(@AuthenticationPrincipal User user,Model model) {
+        model.addAttribute("user", user);
         model.addAttribute("people", userService.getAllUsers());
         model.addAttribute("roles", roleService.allRoles());
         return "admin/index";
@@ -63,33 +64,24 @@ public class AdminController {
         return "redirect:/admin/people";
     }
 
-    @DeleteMapping("/people/{id}")
+    @DeleteMapping("/people/{id}/delete")
     public String deletePerson(@PathVariable("id") int id) {
         userService.removeUserById(id);
         return "redirect:/admin/people";
     }
 
-    @GetMapping("/people/{id}/edit")
-    public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("roles", roleService.allRoles());
-        model.addAttribute("user", userService.getUserById(id));
-        return "admin/edit";
-    }
 
-    @PatchMapping("/people/{id}")
+    @PutMapping("/people/{id}/update")
     public String updatePerson(@ModelAttribute("user") @Valid User updateUser,
                                @RequestParam(value = "userRolesSelector") String[] selectResult,
-                               @PathVariable("id") int id,
-                               BindingResult bindingResult) {
+                               @PathVariable("id") int id) {
 
 
 
         for (String s : selectResult) {
             updateUser.addRole(roleService.getRole("ROLE_" + s));
         }
-        if (bindingResult.hasErrors()) {
-            return "admin/edit";
-        }
+
         User user = userService.getUserById(id);
 
         if (!(user.getPassword()).equals(updateUser.getPassword())) {
