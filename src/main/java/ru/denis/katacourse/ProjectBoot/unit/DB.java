@@ -23,7 +23,7 @@ public class DB {
         this.passwordEncoder = passwordEncoder;
     }
 
-
+@PostConstruct
     private void dataBase() {
         Role roleAdmin = new Role("ROLE_ADMIN");
         Role roleUser = new Role("ROLE_USER");

@@ -32,6 +32,7 @@ public class AdminController {
     @GetMapping()
     public String printWelcome(@AuthenticationPrincipal User user, ModelMap model) {
         model.addAttribute("user", user);
+
         return "admin/adminPage";
     }
 
@@ -45,14 +46,18 @@ public class AdminController {
     }
 
     @GetMapping("/people/new")
-    public String newUser(@ModelAttribute("user") User user) {
+    public String newUser(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("people", userService.getAllUsers());
+        model.addAttribute("roles", roleService.allRoles());
         return "admin/new";
     }
 
     @PostMapping("/people")
     public String create(@ModelAttribute("user") @Valid User user,
                          @RequestParam(value = "checkedRoles") String[] selectResult,
-                         BindingResult bindingResult) {
+                         BindingResult bindingResult)  {
+
         for (String s : selectResult) {
             user.addRole(roleService.getRole("ROLE_" + s));
         }
@@ -64,14 +69,14 @@ public class AdminController {
         return "redirect:/admin/people";
     }
 
-    @DeleteMapping("/people/{id}/delete")
+    @DeleteMapping("/people/{id}")
     public String deletePerson(@PathVariable("id") int id) {
         userService.removeUserById(id);
         return "redirect:/admin/people";
     }
 
 
-    @PutMapping("/people/{id}/update")
+    @PostMapping("/people/update/{id}")
     public String updatePerson(@ModelAttribute("user") @Valid User updateUser,
                                @RequestParam(value = "userRolesSelector") String[] selectResult,
                                @PathVariable("id") int id) {
