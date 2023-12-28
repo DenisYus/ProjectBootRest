@@ -2,6 +2,7 @@ package ru.denis.katacourse.ProjectBoot.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import ru.denis.katacourse.ProjectBoot.model.Role;
 
@@ -21,7 +22,7 @@ public class RoleDAOImpl implements RoleDAO {
                     .setParameter("userRole", userRole)
                     .getSingleResult();
         } catch (Exception e) {
-            System.out.println("Role not found!");
+            throw new UsernameNotFoundException("Role not found");
         }
         return role;
     }

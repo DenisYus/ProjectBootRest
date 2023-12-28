@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
     void saveUser(User user);
 
-    void updateUser(User updateUser);
+    void updateUser(User updateUser, int id);
 
     void removeUserById(int id);
 
@@ -20,5 +20,5 @@ public interface UserService extends UserDetailsService {
 
     UserDetails loadUserByUsername(String email);
 
-    void passEncod(User user);
+
 }

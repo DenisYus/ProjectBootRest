@@ -46,7 +46,7 @@ public class AuthController {
             return "/auth/registration";
         }
 
-        userService.passEncod(user);
+
         userService.saveUser(user);
         return "redirect:/auth/login";
     }

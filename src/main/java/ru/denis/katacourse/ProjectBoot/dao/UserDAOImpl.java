@@ -3,6 +3,7 @@ package ru.denis.katacourse.ProjectBoot.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import ru.denis.katacourse.ProjectBoot.model.User;
 
@@ -32,7 +33,7 @@ public class UserDAOImpl implements UserDAO {
             User user = entityManager.find(User.class, id);
             entityManager.remove(user);
         } catch (NullPointerException e) {
-            System.out.println("user = null");
+            throw new UsernameNotFoundException("User not found");
         }
 
     }

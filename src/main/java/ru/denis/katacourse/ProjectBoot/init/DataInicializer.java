@@ -1,4 +1,4 @@
-package ru.denis.katacourse.ProjectBoot.unit;
+package ru.denis.katacourse.ProjectBoot.init;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,19 +11,16 @@ import ru.denis.katacourse.ProjectBoot.service.UserService;
 import java.util.HashSet;
 import java.util.Set;
 @Component
-public class DB {
+public class DataInicializer {
     private final UserService userService;
     private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder;
 
-
-    public DB(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
+    public DataInicializer(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
     }
 
-@PostConstruct
+    @PostConstruct
     private void dataBase() {
         Role roleAdmin = new Role("ROLE_ADMIN");
         Role roleUser = new Role("ROLE_USER");
@@ -36,8 +33,7 @@ public class DB {
         userSet.add(roleUser);
         User newUser = new User("Ivan", 25, "vanya@mail.com", "123", userSet);
         User admin = new User("Petya", 30, "petya@mail.com", "123", adminSet);
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+
         userService.saveUser(newUser);
         userService.saveUser(admin);
     }

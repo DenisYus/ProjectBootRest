@@ -24,13 +24,13 @@ import ru.denis.katacourse.ProjectBoot.service.UserService;
 public class SecurityConfig {
 
     private final UserService userService;
-
+    private final LoginSuccessHandler loginSuccessHandler;
     public SecurityConfig(UserService userService, LoginSuccessHandler loginSuccessHandler) {
         this.userService = userService;
         this.loginSuccessHandler = loginSuccessHandler;
     }
 
-    private final LoginSuccessHandler loginSuccessHandler;
+
 
 
     @Bean

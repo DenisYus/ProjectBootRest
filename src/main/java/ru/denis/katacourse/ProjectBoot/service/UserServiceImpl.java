@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
+
     @Lazy
     public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
@@ -31,12 +31,18 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDAO.saveUser(user);
     }
 
     @Override
     @Transactional
-    public void updateUser(User updateUser) {
+    public void updateUser(User updateUser, int id) {
+        User user = getUserById(id);
+        if (!(user.getPassword()).equals(updateUser.getPassword())) {
+            updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+
+        }
         userDAO.updateUser(updateUser);
     }
 
@@ -66,10 +72,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public void passEncod(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-    }
+
 
 
 

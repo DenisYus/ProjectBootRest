@@ -64,7 +64,6 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admin/new";
         }
-        userService.passEncod(user);
         userService.saveUser(user);
         return "redirect:/admin/people";
     }
@@ -81,18 +80,10 @@ public class AdminController {
                                @RequestParam(value = "userRolesSelector") String[] selectResult,
                                @PathVariable("id") int id) {
 
-
-
         for (String s : selectResult) {
             updateUser.addRole(roleService.getRole("ROLE_" + s));
         }
-
-        User user = userService.getUserById(id);
-
-        if (!(user.getPassword()).equals(updateUser.getPassword())) {
-            userService.passEncod(updateUser);
-        }
-        userService.updateUser(updateUser);
+        userService.updateUser(updateUser, id);
         return "redirect:/admin/people";
 
 
