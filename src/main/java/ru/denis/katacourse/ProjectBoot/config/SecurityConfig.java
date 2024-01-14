@@ -37,21 +37,21 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/main").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/auth/login", "/auth/registration", "/error").permitAll()
-                        .anyRequest().hasAnyRole("USER", "ADMIN")
+
 
                 )
 
                 .formLogin((form) -> form
-                        .loginPage("/auth/login")
+                        .loginPage("login")
                         .loginProcessingUrl("/process_login")
                         .successHandler(loginSuccessHandler)
-                        .failureUrl("/auth/login?error")
+                        .failureUrl("/login?error")
                         .permitAll())
                 .logout((logout) -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/auth/login")
+                        .logoutSuccessUrl("/login")
                         .permitAll());
 
 

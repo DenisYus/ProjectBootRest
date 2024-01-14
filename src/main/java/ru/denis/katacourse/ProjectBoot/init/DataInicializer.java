@@ -10,7 +10,7 @@ import ru.denis.katacourse.ProjectBoot.service.UserService;
 
 import java.util.HashSet;
 import java.util.Set;
-@Component
+
 public class DataInicializer {
     private final UserService userService;
     private final RoleService roleService;
@@ -20,7 +20,7 @@ public class DataInicializer {
         this.roleService = roleService;
     }
 
-    @PostConstruct
+
     private void dataBase() {
         Role roleAdmin = new Role("ROLE_ADMIN");
         Role roleUser = new Role("ROLE_USER");

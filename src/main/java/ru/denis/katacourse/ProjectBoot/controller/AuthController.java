@@ -10,15 +10,11 @@ import ru.denis.katacourse.ProjectBoot.service.RoleService;
 import ru.denis.katacourse.ProjectBoot.service.UserService;
 
 
-@Controller
+@RestController
 @RequestMapping("/auth")
 public class AuthController {
-
     private final RoleService roleService;
     private final UserService userService;
-
-
-
 
     public AuthController(RoleService roleService, UserService userService) {
         this.roleService = roleService;
