@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ViewController {
-    @GetMapping("/mainPage")
+    @GetMapping("/main")
     public String currentUser() {
         return "main";
     }
